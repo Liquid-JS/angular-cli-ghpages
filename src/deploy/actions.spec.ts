@@ -53,7 +53,11 @@ describe('Deploy Angular apps', () => {
     const spy = jest.spyOn(mockEngine, 'run');
     await deploy(mockEngine, context, BUILD_TARGET, {});
 
-    expect(spy).toHaveBeenCalledWith('dist/some-folder/browser', {}, context.logger);
+    expect(spy).toHaveBeenCalledWith(
+      'dist/some-folder/browser',
+      {},
+      context.logger
+    );
   });
 
   describe('error handling', () => {
@@ -126,7 +130,7 @@ const createBuilderOutputMock = (success: boolean): BuilderOutput => {
   return {
     info: { info: null },
     // unfortunately error is undefined in case of a build errors
-    error: (undefined as unknown) as string,
+    error: undefined as unknown as string,
     success: success,
     target: {} as Target
   };

@@ -40,7 +40,6 @@ describe('ng-add', () => {
   });
 
   describe('project selection', () => {
-
     it('should select the first project if there is only one', async () => {
       const tree = Tree.empty();
       const angularJSON = generateAngularJson();

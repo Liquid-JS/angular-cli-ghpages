@@ -11,9 +11,9 @@ import Git from 'gh-pages/lib/git';
 export async function run(
   dir: string,
   options: Schema & {
-    dotfiles: boolean,
-    notfound: boolean,
-    nojekyll: boolean
+    dotfiles: boolean;
+    notfound: boolean;
+    nojekyll: boolean;
   },
   logger: logging.LoggerApi
 ) {
@@ -46,15 +46,17 @@ export async function run(
 export async function prepareOptions(
   origOptions: Schema,
   logger: logging.LoggerApi
-): Promise<Schema & {
-  dotfiles: boolean,
-  notfound: boolean,
-  nojekyll: boolean
-}> {
+): Promise<
+  Schema & {
+    dotfiles: boolean;
+    notfound: boolean;
+    nojekyll: boolean;
+  }
+> {
   const options: Schema & {
-    dotfiles: boolean,
-    notfound: boolean,
-    nojekyll: boolean
+    dotfiles: boolean;
+    notfound: boolean;
+    nojekyll: boolean;
   } = {
     ...defaults,
     ...origOptions
@@ -196,8 +198,8 @@ async function checkIfDistFolderExists(dir: string) {
 async function createNotFoundFile(
   dir: string,
   options: {
-    notfound: boolean,
-    dryRun?: boolean
+    notfound: boolean;
+    dryRun?: boolean;
   },
   logger: logging.LoggerApi
 ) {
@@ -220,7 +222,9 @@ async function createNotFoundFile(
     await fse.copy(indexHtml, notFoundFile);
     logger.info('404.html file created');
   } catch (err) {
-    logger.info('index.html could not be copied to 404.html. Proceeding without it.');
+    logger.info(
+      'index.html could not be copied to 404.html. Proceeding without it.'
+    );
     logger.debug('Diagnostic info: ' + err.message);
     return;
   }
@@ -229,8 +233,8 @@ async function createNotFoundFile(
 async function createCnameFile(
   dir: string,
   options: {
-    cname?: string,
-    dryRun?: boolean
+    cname?: string;
+    dryRun?: boolean;
   },
   logger: logging.LoggerApi
 ) {
@@ -257,8 +261,8 @@ async function createCnameFile(
 async function createNojekyllFile(
   dir: string,
   options: {
-    nojekyll: boolean,
-    dryRun?: boolean
+    nojekyll: boolean;
+    dryRun?: boolean;
   },
   logger: logging.LoggerApi
 ) {
@@ -284,9 +288,9 @@ async function publishViaGhPages(
   ghPages: GHPages,
   dir: string,
   options: Schema & {
-    dotfiles: boolean,
-    notfound: boolean,
-    nojekyll: boolean
+    dotfiles: boolean;
+    notfound: boolean;
+    nojekyll: boolean;
   },
   logger: logging.LoggerApi
 ) {
@@ -296,15 +300,29 @@ async function publishViaGhPages(
         JSON.stringify(
           {
             dir,
-            repo:       options.repo      || 'current working directory (which must be a git repo in this case) will be used to commit & push',
-            message:    options.message,
-            branch:     options.branch,
-            name:       options.name      ? `the name '${options.username} will be used for the commit` : 'local or global git user name will be used for the commit',
-            email:      options.email     ? `the email '${options.cname} will be used for the commit` : 'local or global git user email will be used for the commit',
-            dotfiles:   options.dotfiles  ? `files starting with dot ('.') will be included` : `files starting with dot ('.') will be ignored`,
-            notfound:   options.notfound  ? 'a 404.html file will be created' : 'a 404.html file will NOT be created',
-            nojekyll:   options.nojekyll  ? 'a .nojekyll file will be created' : 'a .nojekyll file will NOT be created',
-            cname:      options.cname     ? `a CNAME file with the content '${options.cname}' will be created` : 'a CNAME file will NOT be created'
+            repo:
+              options.repo ||
+              'current working directory (which must be a git repo in this case) will be used to commit & push',
+            message: options.message,
+            branch: options.branch,
+            name: options.name
+              ? `the name '${options.username} will be used for the commit`
+              : 'local or global git user name will be used for the commit',
+            email: options.email
+              ? `the email '${options.cname} will be used for the commit`
+              : 'local or global git user email will be used for the commit',
+            dotfiles: options.dotfiles
+              ? `files starting with dot ('.') will be included`
+              : `files starting with dot ('.') will be ignored`,
+            notfound: options.notfound
+              ? 'a 404.html file will be created'
+              : 'a 404.html file will NOT be created',
+            nojekyll: options.nojekyll
+              ? 'a .nojekyll file will be created'
+              : 'a .nojekyll file will NOT be created',
+            cname: options.cname
+              ? `a CNAME file with the content '${options.cname}' will be created`
+              : 'a CNAME file will NOT be created'
           },
           null,
           '  '

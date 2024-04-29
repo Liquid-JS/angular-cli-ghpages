@@ -1,4 +1,7 @@
-import { BuilderContext, targetFromTargetString } from '@angular-devkit/architect';
+import {
+  BuilderContext,
+  targetFromTargetString
+} from '@angular-devkit/architect';
 import { logging } from '@angular-devkit/core';
 import path from 'path';
 
@@ -50,11 +53,8 @@ export default async function deploy(
 
   let dir: string;
   if (options.dir) {
-
     dir = options.dir;
-
   } else {
-
     const buildOptions = await context.getTargetOptions(
       targetFromTargetString(buildTarget.name)
     );
@@ -76,13 +76,13 @@ export default async function deploy(
       dir = path.join(buildOptions.outputPath, 'browser');
     } else {
       const obj = buildOptions.outputPath as any;
-      dir = path.join(obj.base, obj.browser)
+      dir = path.join(obj.base, obj.browser);
     }
   }
 
   await engine.run(
     dir,
     options,
-    (context.logger as unknown) as logging.LoggerApi
+    context.logger as unknown as logging.LoggerApi
   );
 }

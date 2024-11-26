@@ -303,6 +303,7 @@ async function publishViaGhPages(
             repo:
               options.repo ||
               'current working directory (which must be a git repo in this case) will be used to commit & push',
+            remote: options.remote,
             message: options.message,
             branch: options.branch,
             name: options.name
@@ -322,7 +323,10 @@ async function publishViaGhPages(
               : 'a .nojekyll file will NOT be created',
             cname: options.cname
               ? `a CNAME file with the content '${options.cname}' will be created`
-              : 'a CNAME file will NOT be created'
+              : 'a CNAME file will NOT be created',
+            add: options.add
+              ? 'all files will be added to the branch. Existing files will not be removed'
+              : 'existing files will be removed from the branch before adding the new ones'
           },
           null,
           '  '
